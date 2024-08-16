@@ -1,0 +1,29 @@
+function abrirAba(aba) {
+    // Esconde todo o conteúdo das abas
+    var conteudos = document.getElementsByClassName('conteudo-aba');
+    for (var i = 0; i < conteudos.length; i++) {
+        conteudos[i].style.display = 'none';
+    }
+
+    // Mostra o conteúdo da aba selecionada
+    document.getElementById(aba).style.display = 'block';
+}
+
+// Exemplo de uso: Para o input de arquivos
+document.getElementById('selecionar-arquivo').addEventListener('change', function(event) {
+    var listaArquivos = document.getElementById('lista-imagens-arquivo');
+    listaArquivos.innerHTML = '';  // Limpa a lista de imagens
+
+    for (var i = 0; i < event.target.files.length; i++) {
+        (function(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('miniatura');
+                listaArquivos.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        })(event.target.files[i]);
+    }
+});
